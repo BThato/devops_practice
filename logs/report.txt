@@ -1,0 +1,4 @@
+--- LOG ANALYSIS REPORT ---
+Total 200 OK: 4
+Total 404 Not Found: 2
+Total 500 Errors: 2
