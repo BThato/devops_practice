@@ -7,7 +7,7 @@ count_500 = 0
 
 # 2. Open and read the log file
 try:
-    with open("access.log", "r") as file:
+    with open("logs/access.log", "r") as file:
         for line in file:
             if "200" in line:
                 count_200 += 1
