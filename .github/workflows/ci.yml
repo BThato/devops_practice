@@ -1,0 +1,27 @@
+name: Deveops CI Pipeline \
+
+# Triggers this workflow on every push to the main branch
+
+on:
+ push:
+  branches: ["main"]
+
+
+jobs: 
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your code from GitHub onto the runner server
+     - name: checkout Code
+       uses: actions/checkout@v4
+
+     #2 Setup Python enviroment on the server 
+     - name: Set up Python 
+       uses: actions/setup-python@v5
+       with: 
+        python-version: '3.9'
+
+     #3 Run your log analyzer script to verify it works
+     - name: Run Python Log Analyer
+       run: python3 log_analyer.py
