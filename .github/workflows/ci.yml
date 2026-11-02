@@ -24,4 +24,4 @@ jobs:
 
      #3 Run your log analyzer script to verify it works
      - name: Run Python Log Analyzer
-       run: python3 week1/log_analyzer.py
+       run: python3 log_analyzer.py
