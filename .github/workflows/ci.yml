@@ -4,9 +4,17 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  REGISTRY: ghrc.io
+  IMAGE_NAME: ${{github.repository}}
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
 
     # Tell GitHub Actions to run all steps inside the week1 folder
     steps:
@@ -20,3 +28,27 @@ jobs:
 
     - name: Run Python Log Analyzer
       run: python3 log_analyzer.py
+
+
+    - name: Log in to the Container registry 
+      uses: docker/login-actions@v3
+      with: 
+        registry: ${{env.REGISTRY}} 
+        username: ${{github.actor}} 
+        Password: ${{secrets.GITHUB_TOKEN}} 
+
+    - name: Extract metadate (tags. lables ) for docker
+      id: meta
+      uses: docker/metadata-actions@v5
+      with:
+        images: ${{env.REGISTRY}}?${{env.IMAGE_NAME}}
+
+    - name: "Build and push docker Images"
+      uses: docker/build-push-actions@v5
+      with:
+        context: .
+        push: true
+        tags: ${{steps.meta.outputs.tags}}
+        lablee: ${{steps.meta.outcome.lables}}
+
+
