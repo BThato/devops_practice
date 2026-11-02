@@ -9,10 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Tell GitHub Actions to run all steps inside the week1 folder
-    defaults:
-      run:
-        working-directory: ./week1
-
+    
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
