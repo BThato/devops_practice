@@ -1,27 +1,26 @@
-name: Deveops CI Pipeline \
-
-# Triggers this workflow on every push to the main branch
+name: DevOps CI Pipeline
 
 on:
- push:
-  branches: ["main"]
+  push:
+    branches: [ "main" ]
 
-
-jobs: 
+jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
+    # Tell GitHub Actions to run all steps inside the week1 folder
+    defaults:
+      run:
+        working-directory: ./week1
+
     steps:
-      # 1. Checkout your code from GitHub onto the runner server
-     - name: checkout Code
-       uses: actions/checkout@v4
+    - name: Checkout Code
+      uses: actions/checkout@v4
 
-     #2 Setup Python enviroment on the server 
-     - name: Set up Python 
-       uses: actions/setup-python@v5
-       with: 
-        python-version: '3.11'
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-     #3 Run your log analyzer script to verify it works
-     - name: Run Python Log Analyzer
-       run: python3 log_analyzer.py
+    - name: Run Python Log Analyzer
+      run: python3 log_analyzer.py
