@@ -7,8 +7,8 @@ WORKDIR /app
 
 #Copy your scripts and logs file from you host machine into the container
 
-COPY logs/log_analyzer.py /app/
-COPY logs/access.log /app/
+COPY log_analyzer.py .
+COPY logs/ logs/
 
 CMD ["python3", "log_analyzer.py"]
 
