@@ -23,5 +23,5 @@ jobs:
         python-version: '3.11'
 
      #3 Run your log analyzer script to verify it works
-     - name: Run Python Log Analyer
-       run: python3 log_analyer.py
+     - name: Run Python Log Analyzer
+       run: python3 log_analyzer.py
