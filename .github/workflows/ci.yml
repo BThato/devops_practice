@@ -27,7 +27,6 @@ jobs:
           push: false
           tags: log-analyzer-api:latest
           load: true
-
       # 4. Spin up the container and test the endpoint automatically
       - name: Run Container & Test Endpoint
         run: |
