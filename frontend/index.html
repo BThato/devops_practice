@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Log Analyzer Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        pre { background: #eee; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Log Analyzer Dashboard</h1>
+        <p>Fetching real-time metrics from FastAPI backend...</p>
+        <pre id="metrics">Loading...</pre>
+    </div>
+
+    <script>
+        // Note: In Docker Compose, services communicate via service name or host ports
+        fetch('/api/metrics')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('metrics').textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('metrics').textContent = 'Error fetching metrics: ' + error;
+            });
+    </script>
+</body>
+</html>

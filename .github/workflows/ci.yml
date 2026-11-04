@@ -1,0 +1,45 @@
+name: CI Pipeline - Log Analyzer
+
+on:
+  push:
+    branches: [ "main", "master", "*" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout your code from GitHub onto the runner
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Docker Buildx for advanced container building
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # 3. Build your FastAPI Docker image (loads it into runner docker daemon)
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: log-analyzer-api:latest
+          load: true
+
+      # 4. Spin up the container and test the endpoint automatically
+      - name: Run Container & Test Endpoint
+        run: |
+          echo "Starting container for integration testing..."
+          docker run -d -p 8000:8000 --name test_api log-analyzer-api:latest
+          
+          # Give Uvicorn a few seconds to boot up
+          sleep 3
+          
+          echo "Testing /api/metrics endpoint..."
+          curl --retry 3 --retry-delay 2 --retry-connrefused http://localhost:8000/api/metrics
+          
+          echo "Cleaning up test container..."
+          docker stop test_api
+          docker rm test_api
