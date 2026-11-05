@@ -11,15 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout your code from GitHub onto the runner
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Set up Docker Buildx for advanced container building
+      - name: Set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: | 
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run Unit Test
+        run: pytest
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 3. Build your FastAPI Docker image (loads it into runner docker daemon)
       - name: Build Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -27,7 +39,7 @@ jobs:
           push: false
           tags: log-analyzer-api:latest
           load: true
-      # 4. Spin up the container and test the endpoint automatically
+
       - name: Run Container & Test Endpoint
         run: |
           echo "Starting container for integration testing..."
