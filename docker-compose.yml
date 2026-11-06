@@ -1,21 +1,39 @@
-version: '3.8'
 services:
   api:
-   build: .
-   container_name: log_analyzer_api
-   ports:
-     - "8000:8000"
-   volumes:
-       - .:/app
-   restart: always
+    build: .
+    container_name: log_analyzer_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+      - ./logs:/app/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.50'       # Maximum 50% of one CPU core
+          memory: 512M       # Maximum 512 Megabytes of RAM
+        reservations:
+          cpus: '0.10'       # Guaranteed minimum CPU allocation
+          memory: 128M       # Guaranteed minimum RAM allocation
 
   frontend:
-   image: nginx:alpine
-   container_name: log_analyzer_frontend
-   ports:
-     - "8080:80"
-   volumes:
-    - ./frontend:/usr/share/nginx/html:ro
-    - ./frontend/default.conf:/etc/nginx/conf.d/default.conf:ro
-     
-   restart: always
+    image: nginx:alpine
+    container_name: log_analyzer_frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend:/usr/share/nginx/html:ro
+      - ./frontend/default.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'       # Maximum 25% of one CPU core
+          memory: 128M       # Maximum 128 Megabytes of RAM

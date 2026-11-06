@@ -5,6 +5,10 @@ FROM python:3.11-slim
 #Set the working Directory inside teh container
 WORKDIR /app
 
+
+# Install system dependencies including curl for healthchecks
+RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/*
+
 #Copy requirements first to leverage Docker layers caching
 COPY requirements.txt .
 
