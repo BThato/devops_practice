@@ -104,5 +104,5 @@ jobs:
         with:
           task-definition: ${{ steps.render-web.outputs.task-definition }}
           service: log-analyzer-service
-          cluster: log-analyzer-cluster
+          cluster: Log-analyzer-cluster
           wait-for-service-stability: true
