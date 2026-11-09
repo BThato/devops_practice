@@ -103,6 +103,6 @@ jobs:
         uses: aws-actions/amazon-ecs-deploy-task-definition@v2
         with:
           task-definition: ${{ steps.render-web.outputs.task-definition }}
-          service: log-analyzer-service
+          service: log-analyzer-service-o2gp3crh
           cluster: log-analyzer-cluster
           wait-for-service-stability: true
