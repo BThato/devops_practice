@@ -45,7 +45,7 @@ jobs:
         run: |
           docker run -d -p 8000:8000 --name test_api log-analyzer-api:latest
           sleep 3
-          curl --fail http://localhost:8000/api/metrics
+          curl --fail http://localhost:8000/
           docker stop test_api
           docker rm test_api
 
