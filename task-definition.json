@@ -8,7 +8,7 @@
   "containerDefinitions": [
     {
       "name": "api",
-      "image": "480859067311.dkr.ecr.us-east-1.amazonaws.com/log-analyzer-api:latest",
+      "image": "480859067311.dkr.ecr.us-east-1.amazonaws.com/log-analyzer-api",
       "essential": true,
       "portMappings": [
         {
