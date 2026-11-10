@@ -26,7 +26,6 @@ def get_status_codes():
     # Regex to match HTTP status codes in standard Nginx/Apache log formats
     pattern = re.compile(r'"\s([1-5][0-9]{2})\s')
 
-
     try:
         with open(LOG_FILE_PATH, "r") as f:
             for line in f:
