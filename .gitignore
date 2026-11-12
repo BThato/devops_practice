@@ -1,0 +1,18 @@
+# Exclude all Terraform variable files (including *.auto.tfvars)
+*.tfvars
+*.tfvars.json
+
+# Exclude local .terraform directories
+**/.terraform/*
+
+# Exclude state files (which can also contain plain-text secrets)
+*.tfstate
+*.tfstate.*
+
+# Exclude crash logs and override files
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json

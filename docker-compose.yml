@@ -17,11 +17,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.50'       # Maximum 50% of one CPU core
-          memory: 512M       # Maximum 512 Megabytes of RAM
+          cpus: '0.50'
+          memory: 512M
         reservations:
-          cpus: '0.10'       # Guaranteed minimum CPU allocation
-          memory: 128M       # Guaranteed minimum RAM allocation
+          cpus: '0.10'
+          memory: 128M
 
   frontend:
     image: nginx:alpine
@@ -35,5 +35,31 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.25'       # Maximum 25% of one CPU core
-          memory: 128M       # Maximum 128 Megabytes of RAM
+          cpus: '0.25'
+          memory: 128M
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    restart: unless-stopped
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node_exporter
+    ports:
+      - "9100:9100"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    restart: unless-stopped
