@@ -3,7 +3,7 @@
 *.tfvars.json
 
 # Exclude local .terraform directories
-**/.terraform/*
+**/./terraform-infra/terraform/*
 
 # Exclude state files (which can also contain plain-text secrets)
 *.tfstate
