@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-analyzer-deployment
+  labels:
+    app: log-analyzer
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: log-analyzer
+  template:
+    metadata:
+      labels:
+        app: log-analyzer
+    spec:
+      containers:
+      - name: log-analyzer
+        image: log-analyzer-api:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"

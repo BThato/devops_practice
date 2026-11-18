@@ -1,18 +1,10 @@
-# Exclude all Terraform variable files (including *.auto.tfvars)
-*.tfvars
-*.tfvars.json
+# Ignore Terraform local directories anywhere, especially inside terraform-infra
+.terraform/
+**/ .terraform/
+terraform-infra/.terraform/
 
-# Exclude local .terraform directories
-**/./terraform-infra/terraform/*
-
-# Exclude state files (which can also contain plain-text secrets)
+# State and lock files
 *.tfstate
 *.tfstate.*
-
-# Exclude crash logs and override files
-crash.log
-crash.*.log
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+.terraform.tfstate.lock.info
+*.tfvarsSS
